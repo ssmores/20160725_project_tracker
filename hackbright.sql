@@ -113,6 +113,23 @@ CREATE TABLE students (
 ALTER TABLE public.students OWNER TO "user";
 
 --
+-- Name: reportcardview; Type: VIEW; Schema: public; Owner: user
+--
+
+CREATE VIEW reportcardview AS
+ SELECT students.first_name,
+    students.last_name,
+    projects.title,
+    projects.max_grade,
+    grades.grade
+   FROM ((students
+     JOIN grades ON (((students.github)::text = (grades.student_github)::text)))
+     JOIN projects ON (((projects.title)::text = (grades.project_title)::text)));
+
+
+ALTER TABLE public.reportcardview OWNER TO "user";
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: user
 --
 
